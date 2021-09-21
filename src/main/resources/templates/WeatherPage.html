@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Today's Forecast</title>
+</head>
+<body>
+<nav th:replace="partials :: navbar">
+
+</nav>
+    <h1>Today's Weather is as follows:</h1>
+<!--<ul>-->
+<!--    <li>Hot</li>-->
+<!--    <li>Humid</li>-->
+<!--    <li th:text="${temp}" ></li>-->
+<!--</ul>-->
+    <ul>
+    <th:block th:each="stat : ${weatherStats}">
+        <li th:text="${stat}"></li>
+    </th:block>
+</ul>
+</body>
+</html>
