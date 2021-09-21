@@ -6,7 +6,6 @@
 </head>
 <body>
 <nav th:replace="partials :: navbar">
-
 </nav>
     <h1>Today's Weather is as follows:</h1>
 <!--<ul>-->
@@ -19,5 +18,8 @@
         <li th:text="${stat}"></li>
     </th:block>
 </ul>
+<div th:replace="partials :: footer">
+
+</div>
 </body>
 </html>
