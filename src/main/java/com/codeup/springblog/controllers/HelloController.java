@@ -56,16 +56,6 @@ public class HelloController {
         return "WeatherPage";
     }
 
-    @GetMapping("/roll-dice/{n}")
-    public String rollDice(Model model){
-        Random r = new Random();
-        @PathVariable int n,
-        int low = 1;
-        int high = 6;
-        int randomNum = r.nextInt(high-low) + low;
-        model.addAttribute("num", randomNum);
 
-        return "roll-dice";
-    }
     }
 
