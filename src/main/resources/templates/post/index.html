@@ -11,7 +11,7 @@
 
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}">Title</h3>
-    <h3 th:body="${post.body}">Body</h3>
+    <div th:text="${post.body}"></div>
 </div>
 </body>
 </html>
