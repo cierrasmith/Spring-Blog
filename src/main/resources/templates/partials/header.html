@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
-
-<head>
+<head th:fragment="head(title)" style="background-color: pink">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
 </head>
-<body>
 
 </body>
 </html>
