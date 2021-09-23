@@ -38,7 +38,7 @@ public class PostController {
     public String individualPost
             (@PathVariable Long id, Model model) {
 
-        Post postToShow = postDao.getById(id);
+        Post postToShow = postDao.getPostById(id);
         model.addAttribute("post", postToShow);
 
 //        Post post = new Post("New title", "New Body");
@@ -63,6 +63,31 @@ public class PostController {
         postDao.save(postToSubmitToDB);
         return "redirect:/posts";
     }
+//
+//    // edit
+//    @PostMapping("posts/edit/{id}")
+//    public String editPost(
+//            @RequestParam(name = "title") String title,
+//            @RequestParam(name = "body") String body
+//    ) {
+//
+//        Post editedPostToDB = new Post (title, body);
+//        postDao.save(editedPostToDB);
+//        return "redirect:/posts";
+//    }
 
 
-}
+    // delete
+    @PostMapping("posts/delete/{id}")
+    public String deletePost(
+            @PathVariable Long id) {
+
+        Post postToDelete = postDao.getPostById(id);
+//        model.addAttribute("post", postToDelete);
+//        {
+            postDao.delete(postToDelete);
+            return "redirect:/posts";
+        }
+
+    }
+
