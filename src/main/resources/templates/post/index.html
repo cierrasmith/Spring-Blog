@@ -8,14 +8,17 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <h2>Viewing All Posts</h2>
+<a th:href="@{/posts/create}">Create a Post</a>
 
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}">Title</h3>
     <div th:text="${post.body}"></div>
+<!--    <p>Posted by: <span th:text="${post.owner.email}"></span></p>-->
     <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
     <form th:action="@{/posts/delete/{id}(id=${post.id})}" th:method="post">
         <button type="submit">Delete</button>
     </form>
+
 
 </div>
 </body>

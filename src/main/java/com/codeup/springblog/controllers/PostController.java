@@ -1,7 +1,9 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
+import com.codeup.springblog.repos.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,12 @@ public class PostController {
     // Dependency injection
     private final PostRepository postDao;
 
-    public PostController(PostRepository postDao) {
+    private final UserRepository userDao;
+
+
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -59,23 +65,18 @@ public class PostController {
             @RequestParam(name = "body") String body
     ) {
 
-        Post postToSubmitToDB = new Post(title, body);
-        postDao.save(postToSubmitToDB);
+        User currentUser = userDao.getById(1L);
+
+        Post postToSubmit = new Post();
+        postToSubmit.setTitle(title);
+        postToSubmit.setBody(body);
+        postToSubmit.setOwner(currentUser);
+
+        postDao.save(postToSubmit);
         return "redirect:/posts";
     }
 
     // edit
-//    @PostMapping("posts/edit/{id}")
-//    public String editPost(Model model,
-//            @PathVariable Long id,
-//            @RequestParam(name = "title") String title,
-//            @RequestParam(name = "body") String body
-//    ) {
-//
-//        Post editedPost = new Post (id, title, body);
-//        postDao.save(editedPost);
-//        return "post/edit";
-//    }
     //Ry's way
     @GetMapping("posts/edit/{id}")
     public String editPostForm(@PathVariable long id, Model model) {
