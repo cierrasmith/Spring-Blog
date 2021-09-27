@@ -63,18 +63,38 @@ public class PostController {
         postDao.save(postToSubmitToDB);
         return "redirect:/posts";
     }
-//
-//    // edit
+
+    // edit
 //    @PostMapping("posts/edit/{id}")
-//    public String editPost(
+//    public String editPost(Model model,
+//            @PathVariable Long id,
 //            @RequestParam(name = "title") String title,
 //            @RequestParam(name = "body") String body
 //    ) {
 //
-//        Post editedPostToDB = new Post (title, body);
-//        postDao.save(editedPostToDB);
-//        return "redirect:/posts";
+//        Post editedPost = new Post (id, title, body);
+//        postDao.save(editedPost);
+//        return "post/edit";
 //    }
+    //Ry's way
+    @GetMapping("posts/edit/{id}")
+    public String editPostForm(@PathVariable long id, Model model) {
+        Post editedPost = postDao.getById(id);
+        model.addAttribute("post", editedPost.getId());
+        return "post/edit";
+    }
+
+    @PostMapping("posts/edit/{id}")
+    public String editPost(
+            @PathVariable Long id,
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "body") String body
+    ) {
+        Post editedPost = new Post(id, title, body);
+        postDao.save(editedPost);
+
+        return "redirect:/posts";
+    }
 
 
     // delete
@@ -82,12 +102,10 @@ public class PostController {
     public String deletePost(
             @PathVariable Long id) {
 
-        Post postToDelete = postDao.getPostById(id);
-//        model.addAttribute("post", postToDelete);
-//        {
+        Post postToDelete = postDao.getById(id);
+
             postDao.delete(postToDelete);
             return "redirect:/posts";
         }
-
     }
 

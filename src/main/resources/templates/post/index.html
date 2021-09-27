@@ -12,8 +12,10 @@
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}">Title</h3>
     <div th:text="${post.body}"></div>
-    <a th:href="@{/post/edit/{id}(id=${post.id})}">Edit</a>
-    <a th:href="@{/posts/delete/{id}(id=${post.id})}">Delete</a>
+    <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
+    <form th:action="@{/posts/delete/{id}(id=${post.id})}" th:method="post">
+        <button type="submit">Delete</button>
+    </form>
 
 </div>
 </body>
