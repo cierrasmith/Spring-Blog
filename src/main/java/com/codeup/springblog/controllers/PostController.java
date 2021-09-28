@@ -30,11 +30,6 @@ public class PostController {
 
         List<Post> postsToShow = postDao.findAll();
 
-//        List<Post> posts = new ArrayList<>();
-
-//        posts.add(new Post("One post", "One body"));
-//        posts.add(new Post("Second post", "Second body"));
-
         model.addAttribute("posts", postsToShow);
 
         return "post/index";
@@ -47,65 +42,99 @@ public class PostController {
         Post postToShow = postDao.getPostById(id);
         model.addAttribute("post", postToShow);
 
-//        Post post = new Post("New title", "New Body");
-//        model.addAttribute("postId", id);
-//        model.addAttribute("post", post);
-
         return "post/show";
     }
 
+    // Create Method from Form Model Binding
     @GetMapping("/posts/create")
-    public String showCreateForm() {
-        return "post/create";
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
     public String createPost(
-            @RequestParam(name = "title") String title,
-            @RequestParam(name = "body") String body
+            @ModelAttribute Post post
     ) {
 
-        User currentUser = userDao.getById(1L);
-
-        Post postToSubmit = new Post();
-        postToSubmit.setTitle(title);
-        postToSubmit.setBody(body);
-        postToSubmit.setOwner(currentUser);
-
-        postDao.save(postToSubmit);
+        post.setOwner(userDao.getById(1L));
+        postDao.save(post);
         return "redirect:/posts";
     }
+
+    // These are my original create methods
+//    @GetMapping("/posts/create")
+//    public String showCreateForm() {
+//        return "post/create";
+//    }
+//
+//    @PostMapping("/posts/create")
+//    public String createPost(
+//            @RequestParam(name = "title") String title,
+//            @RequestParam(name = "body") String body
+//    ) {
+//
+//        User currentUser = userDao.getById(1L);
+//
+//        Post postToSubmit = new Post();
+//        postToSubmit.setTitle(title);
+//        postToSubmit.setBody(body);
+//        postToSubmit.setOwner(currentUser);
+//
+//        postDao.save(postToSubmit);
+//        return "redirect:/posts";
+//    }
+
+    // Edit Method from Form Model Binding
+    @GetMapping("/posts/{id}/edit")
+    public String editPostForm(
+            @PathVariable Long id,
+            Model model
+    ){
+        Post editedPost = postDao.getById(id);
+        model.addAttribute("post", editedPost);
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(
+            @ModelAttribute Post post
+    ) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+
 
     // edit
     //Ry's way
-    @GetMapping("posts/edit/{id}")
-    public String editPostForm(@PathVariable long id, Model model) {
-        Post editedPost = postDao.getById(id);
-        model.addAttribute("post", editedPost.getId());
-        return "post/edit";
-    }
+//    @GetMapping("posts/edit/{id}")
+//    public String editPostForm(@PathVariable long id, Model model) {
+//        Post editedPost = postDao.getById(id);
+//        model.addAttribute("post", editedPost.getId());
+//        return "post/edit";
+//    }
 
-    @PostMapping("posts/edit/{id}")
-    public String editPost(
-            @PathVariable Long id,
-            @RequestParam(name = "title") String title,
-            @RequestParam(name = "body") String body
-    ) {
-//        Post editedPost = new Post(id, title, body);
-
-        User currentUser = userDao.getById(1L);
-
-        Post editedPost = new Post();
-        editedPost.setId(id);
-        editedPost.setTitle(title);
-        editedPost.setBody(body);
-        editedPost.setOwner(currentUser);
-
-        postDao.save(editedPost);
-
-
-        return "redirect:/posts";
-    }
+//    @PostMapping("posts/edit/{id}")
+//    public String editPost(
+//            @PathVariable Long id,
+//            @RequestParam(name = "title") String title,
+//            @RequestParam(name = "body") String body
+//    ) {
+////        Post editedPost = new Post(id, title, body);
+//
+//        User currentUser = userDao.getById(1L);
+//
+//        Post editedPost = new Post();
+//        editedPost.setId(id);
+//        editedPost.setTitle(title);
+//        editedPost.setBody(body);
+//        editedPost.setOwner(currentUser);
+//
+//        postDao.save(editedPost);
+//
+//
+//        return "redirect:/posts";
+//    }
 
 
     // delete
