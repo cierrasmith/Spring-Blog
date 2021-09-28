@@ -3,6 +3,8 @@
 <head th:replace="partials/header :: head('Spring Blog | All Posts')">
     <meta charset="UTF-8">
     <title>Title</title>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -13,12 +15,27 @@
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}">Title</h3>
     <div th:text="${post.body}"></div>
+    <a th:href="@{/posts/{id}(id=${post.id})}">More Details</a>
     <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
     <form th:action="@{/posts/delete/{id}(id=${post.id})}" th:method="post">
         <button type="submit">Delete</button>
     </form>
 
+<!--    <div class="card" style="width: 18rem;">-->
+<!--        <div th:each="post : ${posts}">-->
+<!--        <div class="card-body">-->
+<!--            <h3 th:text="${post.title}">Title</h3>-->
+<!--            <p th:text="${post.body}">Body</p>-->
+<!--            <a th:href="@{/posts/{id}(id=${post.id})}" class="card-link">More Details</a>-->
+<!--            <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>-->
+<!--            <form th:action="@{/posts/delete/{id}(id=${post.id})}" th:method="post">-->
+<!--                <button type="submit">Delete</button>-->
+<!--            </form>-->
+<!--        </div>-->
 
+
+<!--    </div>-->
+<!--</div>-->
 </div>
 </body>
 </html>

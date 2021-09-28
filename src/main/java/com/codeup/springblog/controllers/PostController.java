@@ -91,8 +91,18 @@ public class PostController {
             @RequestParam(name = "title") String title,
             @RequestParam(name = "body") String body
     ) {
-        Post editedPost = new Post(id, title, body);
+//        Post editedPost = new Post(id, title, body);
+
+        User currentUser = userDao.getById(1L);
+
+        Post editedPost = new Post();
+        editedPost.setId(id);
+        editedPost.setTitle(title);
+        editedPost.setBody(body);
+        editedPost.setOwner(currentUser);
+
         postDao.save(editedPost);
+
 
         return "redirect:/posts";
     }

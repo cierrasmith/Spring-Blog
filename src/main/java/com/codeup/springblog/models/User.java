@@ -24,8 +24,9 @@ public class User {
     private List<Post> posts;
 
     public User() {
-
     }
+
+
 
     public Long getId() {
         return id;

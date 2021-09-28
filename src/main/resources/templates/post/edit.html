@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit a Post</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-<form th:action="@{|/posts/edit/${id}|}" method="post">
+<nav th:replace="partials/navbar :: navbar"></nav>
 
-  <input type="text" name="title" placeholder="Updated title">
-  <input type="text" name="body" placeholder="Updated body">
-  <input type="submit">
+    <form th:action="@{|/posts/edit/${id}|}" method="post">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="body">Body</label>
+            <input type="text" class="form-control" id="body" name="body" placeholder="Body">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+<a href="/posts">Go back</a>
 
 </form>
 </body>
