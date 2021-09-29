@@ -1,14 +1,13 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
-import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
 import com.codeup.springblog.repos.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -16,13 +15,14 @@ public class PostController {
 
     // Dependency injection
     private final PostRepository postDao;
-
     private final UserRepository userDao;
+    private final EmailService emailService;
 
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -58,6 +58,12 @@ public class PostController {
     ) {
 
         post.setOwner(userDao.getById(1L));
+
+        emailService.prepareAndSend(
+                post,
+                "New Post Alert!",
+                "You have created a new post!"
+        );
         postDao.save(post);
         return "redirect:/posts";
     }
