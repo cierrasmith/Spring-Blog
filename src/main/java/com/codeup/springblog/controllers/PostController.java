@@ -58,9 +58,9 @@ public class PostController {
     public String createPost(
             @ModelAttribute Post post
     ) {
+        User currentlyLoggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
-        post.setOwner((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        post.setOwner(currentlyLoggedIn);
 
         emailService.prepareAndSend(
                 post,

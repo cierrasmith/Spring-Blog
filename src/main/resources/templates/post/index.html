@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/header :: head('Spring Blog | All Posts')">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,12 +11,16 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <h2>Viewing All Posts</h2>
+
+<!--<div sec:authorize="isAuthenticated()">-->
+<!--<h3>Welcome, <span th:text="${#authentication.principal.username}"/>!</h3>-->
 <a th:href="@{/posts/create}">Create a Post</a>
 
 <div th:each="post : ${posts}">
     <hr>
     <h3 th:text="${post.title}">Title</h3>
     <div th:text="${post.body}"></div>
+<!--    <p th:text="${post.owner.username}"></p> // Displays username-->
     <a th:href="@{/posts/{id}(id=${post.id})}">More Details</a>
     <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
     <form th:action="@{/posts/delete/{id}(id=${post.id})}" th:method="post">
