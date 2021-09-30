@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
-<nav th:fragment="navbar" style="background-color: springgreen">
-  <h1>Spring Blog</h1>
+<nav th:fragment="navbar" style="background-image: linear-gradient(pink, lightgreen)">
+      <h1>Spring Blog</h1>
+      <form th:action="@{/logout}" th:method="post">
+        <button class="btn-link btn">Logout</button>
+      </form>
+
+
+
 </nav>
 </html>
