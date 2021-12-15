@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
             if (user == null) {
                 throw new UsernameNotFoundException("No user found for " + username);
             }
-
             return new UserWithRoles(user);
         }
     }
